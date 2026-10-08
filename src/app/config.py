@@ -1,5 +1,6 @@
 from functools import lru_cache
 
+from pydantic import SecretStr
 from pydantic_settings import BaseSettings, SettingsConfigDict
 
 
@@ -14,6 +15,13 @@ class Settings(BaseSettings):
     )
 
     log_level: str = "INFO"
+
+    db_host: str = "127.0.0.1"
+    db_port: int = 5436
+    db_user: str
+    db_password: SecretStr
+    db_name: str
+    db_connect_timeout_seconds: float = 2
 
 
 @lru_cache
