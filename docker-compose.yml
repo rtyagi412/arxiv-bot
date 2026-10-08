@@ -1,0 +1,19 @@
+services:
+  postgres:
+    image: postgres:17
+    environment:
+      POSTGRES_USER: ${ARXIV_BOT_DB_USER:?set ARXIV_BOT_DB_USER in .env}
+      POSTGRES_PASSWORD: ${ARXIV_BOT_DB_PASSWORD:?set ARXIV_BOT_DB_PASSWORD in .env}
+      POSTGRES_DB: ${ARXIV_BOT_DB_NAME:?set ARXIV_BOT_DB_NAME in .env}
+    ports:
+      - "127.0.0.1:${ARXIV_BOT_DB_PORT:-5436}:5432"
+    volumes:
+      - postgres_data:/var/lib/postgresql/data
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U $${POSTGRES_USER} -d $${POSTGRES_DB}"]
+      interval: 2s
+      timeout: 3s
+      retries: 15
+
+volumes:
+  postgres_data:

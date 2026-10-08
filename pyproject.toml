@@ -3,11 +3,15 @@ name = "arxiv-bot"
 version = "0.1.0"
 requires-python = ">=3.12"
 dependencies = [
+    "fastapi>=0.142.4",
+    "psycopg[binary]>=3.3.6",
     "pydantic-settings>=2.15.0",
+    "uvicorn>=0.54.0",
 ]
 
 [dependency-groups]
 dev = [
+    "httpx>=0.28.1",
     "pre-commit>=4.6.2",
     "pytest>=9.1.1",
     "ruff>=0.16.10",
@@ -23,3 +27,7 @@ select = ["E", "F", "I", "UP", "B", "SIM"]
 [tool.pytest.ini_options]
 testpaths = ["tests"]
 pythonpath = ["src"]
+addopts = ["-m", "not integration"]
+markers = [
+    "integration: needs Docker and the Compose PostgreSQL service (run with -m integration)",
+]
