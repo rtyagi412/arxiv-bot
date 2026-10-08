@@ -43,5 +43,22 @@
       "PowerShell(git push *+*)",
       "PowerShell(git merge*)"
     ]
+  },
+    "hooks": {
+    "PreToolUse": [
+      {
+        "matcher": "Write|Edit|MultiEdit",
+        "hooks": [
+          {
+            "type": "command",
+            "command": "bash \"$CLAUDE_PROJECT_DIR/.claude/hooks/protect-artifacts.sh\""
+          },
+          {
+            "type": "command",
+            "command": "bash \"$CLAUDE_PROJECT_DIR/.claude/hooks/protect-secrets.sh\""
+          }
+        ]
+      }
+    ]
   }
 }
